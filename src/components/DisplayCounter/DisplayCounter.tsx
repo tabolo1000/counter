@@ -1,17 +1,23 @@
 import {FC, useEffect, useState} from "react";
-import {number} from "prop-types";
+
+import {
+    ButtonsStyled, ButtonStyled,
+    ContainerIncrementNumber,
+    IncrementNumber,
+    MainBlockStyled
+} from "../SetCounterNumber/_style";
 
 type DisplayCounterType = {
     maxSize: number,
     minSize: number,
 }
-export let DisplayCounter:FC<DisplayCounterType> = ({maxSize, minSize}) => {
-    let initialState:any = () => {
+export let DisplayCounter: FC<DisplayCounterType> = ({maxSize, minSize}) => {
+    let initialState: any = () => {
         let numberCounter = localStorage.getItem("countValue");
         return (numberCounter) ? numberCounter : minSize;
     }
 
-    let [currentValue, setCurrentValue ] = useState( () => parseInt(initialState()));
+    let [currentValue, setCurrentValue] = useState(() => parseInt(initialState()));
 
     // useEffect(() => {
     //     let numberCounter = localStorage.getItem("countValue");
@@ -25,9 +31,9 @@ export let DisplayCounter:FC<DisplayCounterType> = ({maxSize, minSize}) => {
         localStorage.setItem("countValue", JSON.stringify(currentValue))
     }, [currentValue]);
     let incHandler = () => {
-        if(currentValue < maxSize){
+        if (currentValue < maxSize) {
             setCurrentValue(++currentValue)
-        }else if(currentValue > maxSize){
+        } else if (currentValue > maxSize) {
             setCurrentValue(maxSize)
         }
     }
@@ -36,20 +42,38 @@ export let DisplayCounter:FC<DisplayCounterType> = ({maxSize, minSize}) => {
         setCurrentValue(+minSize)
     }
 
-    return <div>
-        <div style = {{border: "2px solid red"}}>
-            <h1 style = {(currentValue == maxSize ? {color: "red", fontSize: "3em"} : {})}>
-                {
-                    (currentValue > maxSize) ? maxSize : ""
-                }
-                {
-                    (currentValue < minSize) ?  minSize : currentValue
-                }
-            </h1>
-        </div>
-        <div style = {{border: "2px solid blue"}}>
-            <button onClick = {() => {incHandler()}}>inc</button>
-            <button onClick = {() => {resetHandler()}}>reset</button>
-        </div>
-    </div>
-}
+    return (
+        <MainBlockStyled>
+            <ContainerIncrementNumber>
+                <IncrementNumber style={(currentValue == maxSize ? {color: "red", fontSize: "5em"} : {})}>
+                    {
+                        (currentValue > maxSize) ? maxSize : "" || (currentValue < minSize) ? minSize : currentValue
+                    }
+
+                </IncrementNumber>
+            </ContainerIncrementNumber>
+            <ButtonsStyled>
+                <ButtonStyled onClick={() => {
+                    incHandler()
+                }}>inc
+                </ButtonStyled>
+                <ButtonStyled onClick={() => {
+                    resetHandler()
+                }}>reset
+                </ButtonStyled>
+            </ButtonsStyled>
+        </MainBlockStyled>
+    );
+
+
+
+};
+
+
+
+
+
+
+
+
+

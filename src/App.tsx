@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import {DisplayCounter} from "./components/DisplayCounter/DisplayCounter";
 import {SetCounterNumber} from "./components/SetCounterNumber/SetCounterNumber";
+import styled from "styled-components";
 
 function App() {
     const initialState = () => {
@@ -11,6 +12,34 @@ function App() {
     };
 
     const [diapason, setDiapason] = useState(initialState);
+
+
+    useEffect(() => {
+        localStorage.setItem("diapasonValue", JSON.stringify(diapason));
+    }, [diapason]); // Вызывается только при изменении diapason
+
+
+  debugger
+  return (
+    <AppStyled>
+            <SetCounterNumber maxSize={diapason.maxNumber} minSize={diapason.minNumber} setDiapason={setDiapason}/>
+            <DisplayCounter maxSize={diapason.maxNumber} minSize={diapason.minNumber}/>
+    </AppStyled>
+  );
+}
+
+export default App;
+
+let AppStyled = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+`
+
+
+
+
   // let [diapason, setDiapason] = useState({"maxNumber": 5, "minNumber": 1});
 
 
@@ -35,19 +64,3 @@ function App() {
     //         setDiapason(JSON.parse(storedValue));
     //     }
     // }, []); // Вызывается только при монтировании компонента, так как зависимости пусты
-
-    useEffect(() => {
-        localStorage.setItem("diapasonValue", JSON.stringify(diapason));
-    }, [diapason]); // Вызывается только при изменении diapason
-
-
-  debugger
-  return (
-    <div className="App">
-        <SetCounterNumber maxSize={diapason.maxNumber} minSize={diapason.minNumber} setDiapason={setDiapason}/>
-        <DisplayCounter maxSize={diapason.maxNumber} minSize={diapason.minNumber}/>
-    </div>
-  );
-}
-
-export default App;
