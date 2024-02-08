@@ -12,6 +12,7 @@ function App() {
     };
 
     const [diapason, setDiapason] = useState(initialState);
+    const [renderSetting, setRender] = useState(false)
 
 
     useEffect(() => {
@@ -19,13 +20,19 @@ function App() {
     }, [diapason]); // Вызывается только при изменении diapason
 
 
-  debugger
-  return (
-    <AppStyled>
-            <SetCounterNumber maxSize={diapason.maxNumber} minSize={diapason.minNumber} setDiapason={setDiapason}/>
-            <DisplayCounter maxSize={diapason.maxNumber} minSize={diapason.minNumber}/>
-    </AppStyled>
-  );
+    debugger
+    return (
+        <AppStyled>
+            {(renderSetting) ? (
+                <SetCounterNumber setRender={setRender} renderSetting={renderSetting} maxSize={diapason.maxNumber} minSize={diapason.minNumber} setDiapason={setDiapason}/>
+            ) : (
+
+                <DisplayCounter setRender={setRender} renderSetting={renderSetting} maxSize={diapason.maxNumber}
+                                minSize={diapason.minNumber}/>
+            )
+            }
+        </AppStyled>
+    );
 }
 
 export default App;
@@ -38,29 +45,27 @@ let AppStyled = styled.div`
 `
 
 
+// let [diapason, setDiapason] = useState({"maxNumber": 5, "minNumber": 1});
 
 
-  // let [diapason, setDiapason] = useState({"maxNumber": 5, "minNumber": 1});
+// useEffect(() => {
+
+//     let numberCounter = localStorage.getItem("diapasonValue");
+//     if(numberCounter){
+//         let stringJs = JSON.parse(numberCounter)
+//         setDiapason(stringJs)
+//         debugger
+//     }
+// }, []);
+//
+// useEffect(() => {
+//     localStorage.setItem("diapasonValue", JSON.stringify(diapason))
+// }, [diapason]);
 
 
-    // useEffect(() => {
-
-    //     let numberCounter = localStorage.getItem("diapasonValue");
-    //     if(numberCounter){
-    //         let stringJs = JSON.parse(numberCounter)
-    //         setDiapason(stringJs)
-    //         debugger
-    //     }
-    // }, []);
-    //
-    // useEffect(() => {
-    //     localStorage.setItem("diapasonValue", JSON.stringify(diapason))
-    // }, [diapason]);
-
-
-    // useEffect(() => {
-    //     const storedValue = localStorage.getItem("diapasonValue");
-    //     if (storedValue) {
-    //         setDiapason(JSON.parse(storedValue));
-    //     }
-    // }, []); // Вызывается только при монтировании компонента, так как зависимости пусты
+// useEffect(() => {
+//     const storedValue = localStorage.getItem("diapasonValue");
+//     if (storedValue) {
+//         setDiapason(JSON.parse(storedValue));
+//     }
+// }, []); // Вызывается только при монтировании компонента, так как зависимости пусты

@@ -11,10 +11,12 @@ type SetCounterNumberType = {
     maxSize: number,
     minSize: number,
     setDiapason: any,
+     renderSetting: boolean,
+    setRender: (isChange: boolean) => void,
 }
 
 export let SetCounterNumber: FC<SetCounterNumberType> = ({
-                                                             maxSize, minSize, setDiapason
+                                                             maxSize, minSize, setDiapason, renderSetting, setRender
                                                          }) => {
 
     let [newDiapason, setNewDiapason] = useState({"maxNumber": maxSize, "minNumber": minSize});
@@ -24,8 +26,9 @@ export let SetCounterNumber: FC<SetCounterNumberType> = ({
         forMinSize: false,
     })
 
-    let setNumber = () => {
+    let setNumberHandler = () => {
         setDiapason(newDiapason)
+        setRender(!renderSetting)
     }
 
     let maxNumberHandler = (e: any) => {
@@ -56,11 +59,6 @@ export let SetCounterNumber: FC<SetCounterNumberType> = ({
                     <div style = {{width: "40%"}}>
                         <InputValueDiapasonStyled type="text" onChange={maxNumberHandler} value={+newDiapason.maxNumber}/>
                     </div>
-                    {/*{*/}
-                    {/*    errorSize.forMaxSize ? <div>*/}
-                    {/*        <p style={{color: "red"}}>You number incorrect!</p>*/}
-                    {/*    </div> : false*/}
-                    {/*}*/}
                 </InputSectionStyled>
                 <InputSectionStyled>
                     <ValueDiapasonStyled style={{width: "40%"}}>start value:</ValueDiapasonStyled>
@@ -70,13 +68,13 @@ export let SetCounterNumber: FC<SetCounterNumberType> = ({
                 </InputSectionStyled>
                    {
                        (errorSize.forMaxSize || errorSize.forMinSize) ? <div>
-                            <p style={{color: "red"}}>You diapason is incorrect!</p>
+                            <p style={{color: "red", margin: '0 0 20px 0'}}>You diapason is incorrect!</p>
                         </div> : false
                     }
                </ContainerValueNumber>
                 <ButtonsStyled>
                     <ButtonStyled onClick={() => {
-                        setNumber()
+                        setNumberHandler()
                     }}>set
                     </ButtonStyled>
                 </ButtonsStyled>

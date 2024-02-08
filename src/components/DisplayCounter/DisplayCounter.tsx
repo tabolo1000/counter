@@ -10,8 +10,10 @@ import {
 type DisplayCounterType = {
     maxSize: number,
     minSize: number,
+    renderSetting: boolean,
+    setRender: (isChange: boolean) => void,
 }
-export let DisplayCounter: FC<DisplayCounterType> = ({maxSize, minSize}) => {
+export let DisplayCounter: FC<DisplayCounterType> = ({maxSize, minSize,renderSetting,setRender}) => {
     let initialState: any = () => {
         let numberCounter = localStorage.getItem("countValue");
         return (numberCounter) ? numberCounter : minSize;
@@ -42,6 +44,11 @@ export let DisplayCounter: FC<DisplayCounterType> = ({maxSize, minSize}) => {
         setCurrentValue(+minSize)
     }
 
+    let renderHandler = (isChange: boolean) => {
+        setRender(isChange)
+    }
+
+
     return (
         <MainBlockStyled>
             <ContainerIncrementNumber>
@@ -53,13 +60,16 @@ export let DisplayCounter: FC<DisplayCounterType> = ({maxSize, minSize}) => {
                 </IncrementNumber>
             </ContainerIncrementNumber>
             <ButtonsStyled>
-                <ButtonStyled onClick={() => {
+                <ButtonStyled disabled={currentValue === maxSize} onClick={() => {
                     incHandler()
                 }}>inc
                 </ButtonStyled>
                 <ButtonStyled onClick={() => {
                     resetHandler()
                 }}>reset
+                </ButtonStyled>
+                <ButtonStyled onClick = {() => {renderHandler(!renderSetting)}}>
+                    set
                 </ButtonStyled>
             </ButtonsStyled>
         </MainBlockStyled>

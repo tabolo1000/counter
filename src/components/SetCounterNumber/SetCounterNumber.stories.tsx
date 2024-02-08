@@ -13,8 +13,9 @@ export default meta;
 
 export let SetCounterNumberStories = () => {
     let [diapason, setDiapason] = useState({"maxNumber": 5, "minNumber": 0});
+    let [renderSetting, setRender] = useState(false)
     return(
         <div>
-             <SetCounterNumber maxSize = {diapason.maxNumber} minSize = {diapason.minNumber} setDiapason={() => {} }/>
+             <SetCounterNumber renderSetting={renderSetting} setRender={setRender} maxSize = {diapason.maxNumber} minSize = {diapason.minNumber} setDiapason={() => {} }/>
         </div>
     )}

@@ -14,6 +14,7 @@ export default meta;
 
 export let DisplayCounterStory = () => {
     let [diapason, setDiapason] = useState({"maxNumber": 5, "minNumber": 0});
-    return <DisplayCounter maxSize={diapason.maxNumber} minSize={diapason.minNumber} />
+    let [renderSetting, setRender] = useState(false)
+    return <DisplayCounter setRender={setRender} renderSetting={renderSetting} maxSize={diapason.maxNumber} minSize={diapason.minNumber} />
 }
 
